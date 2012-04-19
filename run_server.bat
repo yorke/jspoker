@@ -1,0 +1,1 @@
+node node-dev.js --main-file "server.js"

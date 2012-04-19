@@ -1,0 +1,56 @@
+.card {
+height: 156px;
+width: 112px;
+background-image: url('../images/classic_13x4.png')}
+
+.clubs.rank1 {background-position: 0px 0px}
+.clubs.rank2 {background-position: -112px 0px}
+.clubs.rank3 {background-position: -224px 0px}.clubs.rank4 {background-position: -336px 0px}
+.clubs.rank5 {background-position: -448px 0px}
+.clubs.rank6 {background-position: -560px 0px}
+.clubs.rank7 {background-position: -672px 0px}
+.clubs.rank8 {background-position: -784px 0px}
+.clubs.rank9 {background-position: -896px 0px}
+.clubs.rank10 {background-position: -1008px 0px}
+.clubs.rank11 {background-position: -1120px 0px}
+.clubs.rank12 {background-position: -1232px 0px}
+.clubs.rank13 {background-position: -1344px 0px}
+
+.diamonds.rank1 {background-position: 0px -156px}
+.diamonds.rank2 {background-position: -112px -156px}
+.diamonds.rank3 {background-position: -224px -156px}.diamonds.rank4 {background-position: -336px -156px}
+.diamonds.rank5 {background-position: -448px -156px}
+.diamonds.rank6 {background-position: -560px -156px}
+.diamonds.rank7 {background-position: -672px -156px}
+.diamonds.rank8 {background-position: -784px -156px}
+.diamonds.rank9 {background-position: -896px -156px}
+.diamonds.rank10 {background-position: -1008px -156px}
+.diamonds.rank11 {background-position: -1120px -156px}
+.diamonds.rank12 {background-position: -1232px -156px}
+.diamonds.rank13 {background-position: -1344px -156px}
+
+.hearts.rank1 {background-position: 0px -312px}
+.hearts.rank2 {background-position: -112px -312px}
+.hearts.rank3 {background-position: -224px -312px}.hearts.rank4 {background-position: -336px -312px}
+.hearts.rank5 {background-position: -448px -312px}
+.hearts.rank6 {background-position: -560px -312px}
+.hearts.rank7 {background-position: -672px -312px}
+.hearts.rank8 {background-position: -784px -312px}
+.hearts.rank9 {background-position: -896px -312px}
+.hearts.rank10 {background-position: -1008px -312px}
+.hearts.rank11 {background-position: -1120px -312px}
+.hearts.rank12 {background-position: -1232px -312px}
+.hearts.rank13 {background-position: -1344px -312px}
+
+.spades.rank1 {background-position: 0px -468px}
+.spades.rank2 {background-position: -112px -468px}
+.spades.rank3 {background-position: -224px -468px}.spades.rank4 {background-position: -336px -468px}
+.spades.rank5 {background-position: -448px -468px}
+.spades.rank6 {background-position: -560px -468px}
+.spades.rank7 {background-position: -672px -468px}
+.spades.rank8 {background-position: -784px -468px}
+.spades.rank9 {background-position: -896px -468px}
+.spades.rank10 {background-position: -1008px -468px}
+.spades.rank11 {background-position: -1120px -468px}
+.spades.rank12 {background-position: -1232px -468px}
+.spades.rank13 {background-position: -1344px -468px}
