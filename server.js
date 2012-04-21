@@ -5,6 +5,8 @@ var sys = require("util"),
     fs = require("fs"),
     qs = require("querystring");  
     
+    _ = require("underscore");
+    
 //Include the game manager code
 var game = require("./gamemanager.js");
 var httpServer = http.createServer(function(request, response) {  
@@ -64,7 +66,7 @@ game.addNewPlayer("yorke2", 100);
 game.addNewPlayer("yorke3", 100);
 game.addNewPlayer("yorke4", 100);
 
-//game.dealNextHand();
+game.dealNextHand();
 
 //deck.test();
 var stdin = process.openStdin();

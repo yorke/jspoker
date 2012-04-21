@@ -32,6 +32,13 @@ var deck = function() {
 		
 	}
 	
+	
+	this.descHand = function(set) {
+		var result = self.handToString(set);
+		var value = evaluator.eval.apply(evaluator, result);
+		return {value: value, desc: evaluator.desc(evaluator.eval.apply(evaluator, result))};
+	}
+	
 	this.card = function(suit, rank) {
 		var self = this;
 		this.suit = suit;

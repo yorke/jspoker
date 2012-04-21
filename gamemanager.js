@@ -40,7 +40,7 @@ gameManager = function() {
 		}
 		
 		//Buy chips from the bank
-		this.addChips = function(n) {
+		this.buyChips = function(n) {
 			self.chips += n;
 		};
 		
@@ -76,7 +76,7 @@ gameManager = function() {
 		//win the amount of chips from the pot		
 		this.winChips = function(amt) {
 			self.chips += amt;
-			console.log(self.name + " wins " + amt + " chips from the pot.");		
+			log("wins " + amt + " chips from the pot.", false, self);		
 		}
 	}
 	
@@ -150,8 +150,6 @@ gameManager = function() {
 		if (!players[n].seated || !players[n].inhand) {
 			return self.getNextPlayerInHand(n);
 		} else {
-			console.log("Returning next player in hand: " + n);
-			console.log(players[n].seated);
 			return n;
 		}
 	}
@@ -197,8 +195,6 @@ gameManager = function() {
 		while (!players[n].seated || !players[n].inhand) {
 			n = (n + 1) % self.playerCount();
 		}
-		console.log("Dealer pos: " + dealerPos);
-		console.log("FIRST TO ACT: " + n);
 		return n;
 	}
 		
@@ -391,6 +387,11 @@ gameManager = function() {
 		if (currentPlayer == lastAggressor) {
 			self.log("Dealing next community card", false);
 			currentStage++;
+			if (currentStage == 4) {
+				self.performShowdown();
+				return;
+			}
+			
 			self.dealNextStep();
 			//set lastaggressor to SB
 			lastAggressor = self.firstToAct();
@@ -403,6 +404,101 @@ gameManager = function() {
 		self.log(", it is your turn.", false, currentPlayer);
 		self.promptPendingAction();
 	}
+	
+	function playerSort(p1, p2) {
+		if (inPot[p1.name] == null) {
+			inPot[p1.name] = 0;
+		}
+		
+		if (inPot[p2.name] == null) {
+			inPot[p2.name] = 0;
+		}
+		
+		
+		return inPot[p1.name] - inPot[p2.name];
+	}
+	
+	
+	
+	this.performShowdown = function() {
+		//each player shows their cards in turn
+		var first = self.firstToAct();
+		var p = first;
+		
+		var pchips = [];
+		var pvalues = {};
+		do {
+			//check everyone's hand
+			var hand = players[p].hand.slice(0).concat(commCards);
+			var desc = deck.descHand(hand);
+			self.log("shows " + players[p].hand + ", " + desc.desc, false, p);
+			pvalues[players[p].name] = desc.value;
+			//pvalues[players[p].name] = 10;
+			if (inPot[players[p].name] > 0) {
+				pchips.push(players[p]);
+			}
+			p = self.getNextPlayerInHand(p);
+			//console.log(desc.value);
+		} while (p != first);
+		pchips.sort(playerSort);
+		//see who has the most chips
+		//see who has the second highest chips
+		//at this point in time the player at pchips[0] takes all the chips
+		var potcount = 0; 
+		while (pchips.length > 0) {
+			//first pot to be awarded is the main pot. All others are the sub pots.
+			var poteach = inPot[pchips[0].name];
+			var newresult = [];
+			for (var i = 0; i < pchips.length; i++) {
+				inPot[pchips[i].name] -= poteach;
+				if (inPot[pchips[i].name] > 0) {
+					newresult.push(pchips[i]);
+				}
+			}
+			self.awardPot(pchips, poteach * pchips.length, pvalues, potcount);
+			potcount++;
+			pchips = newresult;
+			
+		}
+		
+	}
+	
+	this.awardPot = function(pset, amt, pvalues, potcount) {
+		var pottype = (potcount == 0) ? "Main": "Side";
+		if (amt == 0) return;
+		var maxstr = 0;
+		var maxset = [];
+		for (var i = 0; i < pset.length; i++) {
+			var player = pset[i];
+			if (pvalues[player.name] > maxstr) {
+				maxset = [player];
+				maxstr = pvalues[player.name];
+			} else if (pvalues[player.name] == maxstr) {
+				maxset.push(player);
+			}
+		}
+		if (maxset.length > 1) {
+			amt /= maxset.length;
+			var output = "";
+			for (var i = 0; i < maxset.length; i++) {
+				maxset[i].winChips(amt);
+			}
+			self.log(pottype + " pot of " + amt + " chips each awarded to players: " + 
+				_.map(
+					maxset,
+					function(element) {
+						return element.name
+					}).join(","));
+						
+			 
+			
+		} else if (maxset.length == 1) {
+			self.log(pottype + " pot of " + amt + " chips awarded to " + maxset[0].name);
+			maxset[0].winChips(amt);
+		}
+		
+	}
+	
 	
 	
 	this.performAction = function(actionlist, selection, amount) {

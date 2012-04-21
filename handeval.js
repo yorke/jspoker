@@ -6,7 +6,7 @@ var evaluator = function() {
 
   var rankNames = [
     'deuce',
-    'trey',
+    'three',
     'four',
     'five',
     'six',
